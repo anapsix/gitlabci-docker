@@ -12,7 +12,11 @@ If you want to run my pre-build image, just run the following (possibly as sudo)
 
     docker pull anapsix/gitlab-ci
     docker run -d -e GITLAB_URLS="https://dev.gitlab.org,https://staging.gitlab.org" anapsix/gitlab-ci
-  
+
+You can rebuild the image from scratch with:
+
+    docker build -no-cache -t anapsix/gitlab-ci github.com/anapsix/gitlabci-docker
+
 You must set GITLAB_URLS environmental variable to contain comma delimited list of your GITLAB URLS, otherwise it will refuse to start.
 
 Contributors
