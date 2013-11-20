@@ -78,7 +78,7 @@ end
 def start_gitlabci
   puts "[DEBUG]: starting an appication" if $DEBUG
   system('/bin/bash /home/gitlab_ci/gitlab-ci/lib/support/init.d/gitlab_ci start')
-  exec('/usr/bin/tail -f /home/gitlab_ci/gitlab-ci/log/puma*')
+  exec('/usr/bin/tail -f /home/gitlab_ci/gitlab-ci/log/*')
 end
 
 # help
