@@ -77,6 +77,7 @@ end
 
 def start_gitlabci
   puts "[DEBUG]: starting an appication" if $DEBUG
+  system('/bin/bash /etc/init.d/redis-server start')
   system('/bin/bash /home/gitlab_ci/gitlab-ci/lib/support/init.d/gitlab_ci start')
   exec('/usr/bin/tail -f /home/gitlab_ci/gitlab-ci/log/*')
 end
