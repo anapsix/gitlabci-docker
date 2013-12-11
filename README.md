@@ -11,7 +11,7 @@ Usage
 If you want to run my pre-build image, just run the following (possibly as sudo):
 
     docker pull anapsix/gitlab-ci
-    docker run -d -e GITLAB_URLS="https://dev.gitlab.org,https://staging.gitlab.org" anapsix/gitlab-ci
+    docker run -d -p 9000 -e GITLAB_URLS="https://dev.gitlab.org,https://staging.gitlab.org" anapsix/gitlab-ci
 
 You can rebuild the image from scratch with:
 
