@@ -12,7 +12,9 @@ RUN cd /home/gitlab_ci; sudo -u gitlab_ci -H git clone -b 3-2-stable --depth 1 h
 RUN cd /home/gitlab_ci/gitlab-ci; sudo -u gitlab_ci -H mkdir -p tmp/pids tmp/sockets
 RUN cd /home/gitlab_ci/gitlab-ci; curl -sL https://raw.github.com/anapsix/gitlabci-docker/master/BUNDLER-adding-sqlite3-support.patch | sudo -u gitlab_ci -H git am
 RUN cd /home/gitlab_ci/gitlab-ci; sudo -u gitlab_ci -H bundle install --without development test postgres --deployment
-RUN cd /home/gitlab_ci/gitlab-ci; sudo -u gitlab_ci -H curl -sL https://raw.github.com/anapsix/gitlabci-docker/master/gitlab_ctrl.rb > ./gitlabci_ctrl.rb; chmod +x ./gitlabci_ctrl.rb
+#RUN cd /home/gitlab_ci/gitlab-ci; sudo -u gitlab_ci -H curl -sL https://raw.github.com/anapsix/gitlabci-docker/master/gitlab_ctrl.rb > ./gitlabci_ctrl.rb; chmod +x ./gitlabci_ctrl.rb
+ADD ./gitlab_ctrl.rb /home/gitlab_ci/gitlab-ci/gitlabci_ctrl.rb
+RUN chmod +x /home/gitlab_ci/gitlab-ci/gitlabci_ctrl.rb
 RUN cd /home/gitlab_ci/gitlab-ci; sudo -u gitlab_ci -H ./gitlabci_ctrl.rb --puma --app GITLAB_URLS="https://dev.gitlab.org/"
 RUN cd /home/gitlab_ci/gitlab-ci; sudo -u gitlab_ci -H bundle exec whenever -w RAILS_ENV=production
 
@@ -23,4 +25,4 @@ RUN cd /home/gitlab_ci/gitlab-ci; sudo -u gitlab_ci -H bundle exec whenever -w R
 EXPOSE 9000
 
 WORKDIR /home/gitlab_ci/gitlab-ci
-CMD /home/gitlab_ci/gitlab-ci/gitlabci_ctrl.rb --db --start
+CMD /home/gitlab_ci/gitlab-ci/gitlabci_ctrl.rb --start

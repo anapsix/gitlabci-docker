@@ -70,7 +70,8 @@ def write_db_config
   if ENV['MYSQL_HOST'] && ENV['MYSQL_SETUP'] == "true"
     print "[DEBUG]: Setting up MYSQL.." if ENV['DEBUG']
     begin
-      system('cd /home/gitlab_ci/gitlab-ci; sudo -u gitlab_ci -H bundle exec rake db:setup RAILS_ENV=production > /dev/null 2>&1')
+      print "[DEBUG]: running db:setup rake task" if ENV['DEBUG']
+      exec('sudo -u gitlab_ci -H bundle exec rake db:setup RAILS_ENV=production')
     rescue
       puts "\n[FATAL]: Could not write DB config file (#{$db_config_file}), exiting.."
     else
