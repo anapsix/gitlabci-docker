@@ -19,6 +19,44 @@ You can rebuild the image from scratch with:
 
 You must set GITLAB_URLS environmental variable to contain comma delimited list of your GITLAB URLS, otherwise it will refuse to start.
 
+
+Persistent external MySQL DB is now supported:
+
+You can now use external persistent MySQL DB for your GitLab-CI container.
+Launch the instance like so:
+
+    docker run -d \
+     -e DEBUG=true \
+     -e MYSQL_SETUP=true \
+     -e MYSQL_HOST=10.0.0.100 \
+     -e MYSQL_USER="gitlabci" \
+     -e MYSQL_PWD="gitlabci" \
+     -e MYSQL_DB="gitlabci" \
+     -e GITLAB_URLS="https://dev.gitlab.org/" \
+     -p 9000 anapsix/gitlabci-docker
+
+ **WARNING**: every time you pass *MYSQL_SETUP=true*, it will overwrite an existing MySQL database..
+
+ - You should set MYSQL_SETUP=true only first time you start container only if there is no existing DB for specified credentials / host / db name, otherwise, you **WILL LOSE**
+
+
+Examples
+------------
+
+ - **MYSQL**: only *MYSQL_HOST* variable is required
+       *MYSQL_USER*, *MYSQL_PWD* and *MYSQL_DB* will all default to "gitlabci"
+
+        docker run -d -e MYSQL_HOST=10.0.0.100 \
+         -e GITLAB_URLS="https://dev.gitlab.org/" \
+         -p 9000 anapsix/gitlabci-docker
+
+
+ - **SQLITE3**: to use container-internal ephemeral SQLite3 DB, ommit all *MYSQL_\** variables
+
+        docker run -d -e GITLAB_URLS="https://dev.gitlab.org/" \
+         -p 9000 anapsix/gitlabci-docker
+
+
 Contributors
 ------------
 
