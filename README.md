@@ -33,7 +33,7 @@ Launch the instance like so:
      -e MYSQL_PWD="gitlabci" \
      -e MYSQL_DB="gitlabci" \
      -e GITLAB_URLS="https://dev.gitlab.org/" \
-     -p 9000 anapsix/gitlabci-docker
+     -p 9000 anapsix/gitlab-ci
 
  **WARNING**: every time you pass *MYSQL_SETUP=true*, it will overwrite an existing MySQL database..
 
@@ -48,13 +48,13 @@ Examples
 
         docker run -d -e MYSQL_HOST=10.0.0.100 \
          -e GITLAB_URLS="https://dev.gitlab.org/" \
-         -p 9000 anapsix/gitlabci-docker
+         -p 9000 anapsix/gitlab-ci
 
 
  - **SQLITE3**: to use container-internal ephemeral SQLite3 DB, ommit all *MYSQL_\** variables
 
         docker run -d -e GITLAB_URLS="https://dev.gitlab.org/" \
-         -p 9000 anapsix/gitlabci-docker
+         -p 9000 anapsix/gitlab-ci
 
 
 Contributors
