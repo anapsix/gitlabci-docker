@@ -104,12 +104,19 @@ def write_app_config
   app_config = YAML.load_file($app_config_file + '.example')
 
   # check GITLAB_URLS environmental and bail if not set
+  if ENV['GITLAB_HTTPS'] then
+    puts "[FATAL]: GITLAB_HTTPS has been renamed to GITLAB_CI_HTTPS"
+    exit 1
+  end
+  # check GITLAB_URLS environmental and bail if not set
   if ENV['GITLAB_URLS'] then
     puts "[DEBUG]: GITLAB_URLS=#{ENV['GITLAB_URLS']}" if ENV['DEBUG']
-    puts "[DEBUG]: GITLAB_HTTPS=#{ENV['GITLAB_HTTPS']||false}" if ENV['DEBUG']
+    puts "[DEBUG]: GITLAB_CI_HOST=#{ENV['GITLAB_CI_HOST']||localhost}" if ENV['DEBUG']
+    puts "[DEBUG]: GITLAB_CI_HTTPS=#{ENV['GITLAB_CI_HTTPS']||false}" if ENV['DEBUG']
     app_config["production"]["allowed_gitlab_urls"] = ENV['GITLAB_URLS'].split(",")
-    # enable HTTPS if GITLAB_HTTPS environmental is set to "true"
-    app_config["production"]["gitlab_ci"] = {"https" => true} if ENV['GITLAB_HTTPS'] == "true"
+    app_config["production"]["gitlab_ci"]["host"] = ENV['GITLAB_CI_HOST'] || "localhost"
+    # enable HTTPS if GITLAB_CI_HTTPS environmental is set to "true"
+    app_config["production"]["gitlab_ci"]["https"] = true if ENV['GITLAB_CI_HTTPS'] == "true"
 
     begin
       puts "[DEBUG]: Writing APP config to #{$app_config_file}" if ENV['DEBUG']
