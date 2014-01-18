@@ -39,7 +39,18 @@ Launch the instance like so:
 
  - You should set MYSQL_SETUP=true only first time you start container only if there is no existing DB for specified credentials / host / db name, otherwise, you **WILL LOSE**
 
-
+ ## ENV Params
+ - DEBUG
+ - MYSQL_SETUP
+ - MYSQL_MIGRATE
+ - MYSQL_HOST
+ - MYSQL_USER
+ - MYSQL_PWD
+ - MYSQL_DB
+ - GITLAB_URLS
+ - GITLAB_CI_HOST
+ - GITLAB_CI_HTTPS
+ 
 Examples
 ------------
 
@@ -61,6 +72,7 @@ Contributors
 ------------
 
 * Anastas Semenov <anapsix@random.io>
+* TruongSinh Tran-Nguyen <i@truongsinh.pro>
 
 License
 -------
