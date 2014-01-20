@@ -87,6 +87,18 @@ def write_db_config
   else
     puts "[DEBUG]: Using pre-existing MySQL DB, it's better be all setup.." if ENV['DEBUG'] && ENV['MYSQL_HOST']
   end
+  
+  # setup DB is MYSQL_SETUP flag is set to "true"
+  if ENV['MYSQL_HOST'] && ENV['MYSQL_MIGRATE'] == "true"
+    print "[DEBUG]: migrating MySQL db via db:migrate rake task\n" if ENV['DEBUG']
+    system('sudo -u gitlab_ci -H bundle exec rake db:migrate RAILS_ENV=production')
+    if $?.success?
+      puts "\n[DEBUG]: MySQL migration ok" if ENV['DEBUG']
+    else
+      puts "\n[FATAL]: could not run db:migrate, exiting.."
+      exit 1
+    end
+  end
 end
 
 # write PUMA config

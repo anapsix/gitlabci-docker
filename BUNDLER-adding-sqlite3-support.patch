@@ -1,42 +1,39 @@
-From b8abbcc636dad8271477352315da1e9a575b853c Mon Sep 17 00:00:00 2001
-From: Anastas Semenov <anapsix@random.io>
-Date: Mon, 18 Nov 2013 19:23:18 +0000
-Subject: [PATCH] BUNDLER: adding sqlite3 support
+From f89967bfc5f91eee705fd696ab61b99211a4abbc Mon Sep 17 00:00:00 2001
+From: TruongSinh Tran-Nguyen <i@truongsinh.pro>
+Date: Sat, 18 Jan 2014 14:58:53 +0200
+Subject: [PATCH] sqlite support
 
+Signed-off-by: TruongSinh Tran-Nguyen <i@truongsinh.pro>
 ---
- Gemfile      |    5 +++--
- Gemfile.lock |    2 ++
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ Gemfile      | 1 +
+ Gemfile.lock | 2 ++
+ 2 files changed, 3 insertions(+)
 
 diff --git a/Gemfile b/Gemfile
-index b0e8a4f..f8ae308 100644
+index 9c0b2de..e535187 100644
 --- a/Gemfile
 +++ b/Gemfile
-@@ -11,8 +11,9 @@ end
- gem 'rails', '3.2.14'
- 
+@@ -18,6 +18,7 @@ gem 'activerecord-session_store'
  # DB
--gem 'mysql2', group: :mysql
--gem 'pg',     group: :postgres
-+gem 'sqlite3', group: :sqlite3
-+gem 'mysql2',  group: :mysql
-+gem 'pg',      group: :postgres
+ gem 'mysql2', group: :mysql
+ gem 'pg',     group: :postgres
++gem 'sqlite3',group: :sqlite3
  
  # Settings
  gem 'settingslogic'
 diff --git a/Gemfile.lock b/Gemfile.lock
-index a5f9fad..d71576a 100644
+index 776f53a..724b67d 100644
 --- a/Gemfile.lock
 +++ b/Gemfile.lock
-@@ -247,6 +247,7 @@ GEM
-       multi_json (~> 1.0)
-       rack (~> 1.0)
-       tilt (~> 1.1, != 1.3.0)
+@@ -265,6 +265,7 @@ GEM
+       actionpack (>= 3.0)
+       activesupport (>= 3.0)
+       sprockets (~> 2.8)
 +    sqlite3 (1.3.8)
      stamp (0.5.0)
      state_machine (1.2.0)
-     temple (0.6.5)
-@@ -313,6 +314,7 @@ DEPENDENCIES
+     temple (0.6.7)
+@@ -348,6 +349,7 @@ DEPENDENCIES
    simplecov
    sinatra
    slim
@@ -45,4 +42,4 @@ index a5f9fad..d71576a 100644
    state_machine
    therubyracer
 -- 
-1.7.10.4
+1.8.3.4 (Apple Git-47)
