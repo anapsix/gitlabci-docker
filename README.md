@@ -1,12 +1,11 @@
-gitlabci-docker
-===============
+## gitlabci-docker
 
 This repository is all you need to create your own [Docker](http://docker.io) image of [Gitlab-CI](http://gitlab.org/gitlab-ci/) continuios integration server.
 You can find a pre-build image [anapsix/gitlab-ci at Docker INDEX](https://index.docker.io/u/anapsix/gitlab-ci/)
 
 
-Usage
-------------
+### Usage
+
 
 If you want to run my pre-build image, just run the following (possibly as sudo):
 
@@ -20,7 +19,7 @@ You can rebuild the image from scratch with:
 You must set GITLAB_URLS environmental variable to contain comma delimited list of your GITLAB URLS, otherwise it will refuse to start.
 
 
-Persistent external MySQL DB is now supported:
+#### Persistent external MySQL DB is now supported!
 
 You can now use external persistent MySQL DB for your GitLab-CI container.
 Launch the instance like so:
@@ -37,22 +36,22 @@ Launch the instance like so:
 
  **WARNING**: every time you pass *MYSQL_SETUP=true*, it will overwrite an existing MySQL database..
 
- - You should set MYSQL_SETUP=true only first time you start container only if there is no existing DB for specified credentials / host / db name, otherwise, you **WILL LOSE**
+ - You should set MYSQL_SETUP=true only first time you start container only if there is no existing DB for specified credentials / host / db name, otherwise, you **WILL LOSE** db content and all settings.
 
- ## ENV Params
- - DEBUG
- - MYSQL_SETUP
- - MYSQL_MIGRATE
- - MYSQL_HOST
- - MYSQL_USER
- - MYSQL_PWD
- - MYSQL_DB
- - GITLAB_URLS
- - GITLAB_CI_HOST
- - GITLAB_CI_HTTPS
- 
-Examples
-------------
+
+### ENV params
+ - `DEBUG` (optional: enables debug messages during container startup)
+ - `GITLAB_URLS` (required: set it to full URL of your GitLAB SCM installation)
+ - `GITLAB_CI_HOST` (optional: probably helpful when using HTTPS)
+ - `GITLAB_CI_HTTPS` (optional: used to enable HTTPS support)
+ - `MYSQL_SETUP` (optional: use with caution: initializes DB, wipes it if already present)
+ - `MYSQL_MIGRATE` (optional: use it when upgrading between GitLAB-CI versions)
+ - `MYSQL_HOST` (required for MySQL support, if not set temp SQLite3 will be used)
+ - `MYSQL_USER` (optional, will default to gitlabci if not set)
+ - `MYSQL_PWD` (optional, will default to gitlabci if not set)
+ - `MYSQL_DB` (optional, will default to gitlabci if not set)
+
+### Examples
 
  - **MYSQL**: only *MYSQL_HOST* variable is required
        *MYSQL_USER*, *MYSQL_PWD* and *MYSQL_DB* will all default to "gitlabci"
@@ -68,13 +67,12 @@ Examples
          -p 9000 anapsix/gitlab-ci
 
 
-Contributors
-------------
+### Contributors
 
 * Anastas Semenov <anapsix@random.io>
 * TruongSinh Tran-Nguyen <i@truongsinh.pro>
 
-License
--------
+### License
 
 MIT
+
