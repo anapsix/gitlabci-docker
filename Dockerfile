@@ -10,7 +10,8 @@ RUN adduser --disabled-login --gecos 'GitLab CI' gitlab_ci
 
 RUN cd /home/gitlab_ci; sudo -u gitlab_ci -H git clone -b 3-2-stable --depth 1 https://github.com/gitlabhq/gitlab-ci.git gitlab-ci
 RUN cd /home/gitlab_ci/gitlab-ci; sudo -u gitlab_ci -H mkdir -p tmp/pids tmp/sockets log
-RUN cd /home/gitlab_ci/gitlab-ci; curl -sL https://raw.github.com/anapsix/gitlabci-docker/master/BUNDLER-adding-sqlite3-support.patch | sudo -u gitlab_ci -H git am
+ADD ./BUNDLER-adding-sqlite3-support.patch /tmp/BUNDLER-adding-sqlite3-support.patch
+RUN cd /home/gitlab_ci/gitlab-ci; sudo -u gitlab_ci -H git am /tmp/BUNDLER-adding-sqlite3-support.patch
 RUN cd /home/gitlab_ci/gitlab-ci; sudo -u gitlab_ci -H bundle install --without development test postgres --deployment
 #RUN cd /home/gitlab_ci/gitlab-ci; sudo -u gitlab_ci -H curl -sL https://raw.github.com/anapsix/gitlabci-docker/master/gitlab_ctrl.rb > ./gitlabci_ctrl.rb; chmod +x ./gitlabci_ctrl.rb
 ADD ./gitlab_ctrl.rb /home/gitlab_ci/gitlab-ci/gitlabci_ctrl.rb
