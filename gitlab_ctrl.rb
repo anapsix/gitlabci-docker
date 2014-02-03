@@ -111,7 +111,7 @@ def write_app_config
   # check GITLAB_URLS environmental and bail if not set
   if ENV['GITLAB_URLS'] then
     puts "[DEBUG]: GITLAB_URLS=#{ENV['GITLAB_URLS']}" if ENV['DEBUG']
-    puts "[DEBUG]: GITLAB_CI_HOST=#{ENV['GITLAB_CI_HOST']||localhost}" if ENV['DEBUG']
+    puts "[DEBUG]: GITLAB_CI_HOST=#{ENV['GITLAB_CI_HOST']||'localhost'}" if ENV['DEBUG']
     puts "[DEBUG]: GITLAB_CI_HTTPS=#{ENV['GITLAB_CI_HTTPS']||false}" if ENV['DEBUG']
     app_config["production"]["allowed_gitlab_urls"] = ENV['GITLAB_URLS'].split(",")
     app_config["production"]["gitlab_ci"]["host"] = ENV['GITLAB_CI_HOST'] || "localhost"
