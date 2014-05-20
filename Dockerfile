@@ -1,4 +1,4 @@
-FROM tianon/debian
+FROM debian:wheezy
 
 MAINTAINER Anastas Semenov <anapsix@random.io>
 
