@@ -1,16 +1,16 @@
-From f89967bfc5f91eee705fd696ab61b99211a4abbc Mon Sep 17 00:00:00 2001
-From: TruongSinh Tran-Nguyen <i@truongsinh.pro>
-Date: Sat, 18 Jan 2014 14:58:53 +0200
-Subject: [PATCH] sqlite support
+From ebab50d92142daf70e3277b748bfb53964e79c56 Mon Sep 17 00:00:00 2001
+From: Anastas Dancha <anapsix@random.io>
+Date: Tue, 27 May 2014 17:11:42 +0000
+Subject: [PATCH] [PATCH] add sqlite3 support Signed-off-by: Anastas Dancha
+ <adancha@random.io>
 
-Signed-off-by: TruongSinh Tran-Nguyen <i@truongsinh.pro>
 ---
- Gemfile      | 1 +
- Gemfile.lock | 2 ++
+ Gemfile      |    1 +
+ Gemfile.lock |    2 ++
  2 files changed, 3 insertions(+)
 
 diff --git a/Gemfile b/Gemfile
-index 9c0b2de..e535187 100644
+index 6bca027..757385e 100644
 --- a/Gemfile
 +++ b/Gemfile
 @@ -18,6 +18,7 @@ gem 'activerecord-session_store'
@@ -22,18 +22,18 @@ index 9c0b2de..e535187 100644
  # Settings
  gem 'settingslogic'
 diff --git a/Gemfile.lock b/Gemfile.lock
-index 776f53a..724b67d 100644
+index 29d1690..25191b3 100644
 --- a/Gemfile.lock
 +++ b/Gemfile.lock
-@@ -265,6 +265,7 @@ GEM
+@@ -268,6 +268,7 @@ GEM
        actionpack (>= 3.0)
        activesupport (>= 3.0)
        sprockets (~> 2.8)
-+    sqlite3 (1.3.8)
++    sqlite3 (1.3.9)
      stamp (0.5.0)
      state_machine (1.2.0)
      temple (0.6.7)
-@@ -348,6 +349,7 @@ DEPENDENCIES
+@@ -357,6 +358,7 @@ DEPENDENCIES
    simplecov
    sinatra
    slim
@@ -42,4 +42,5 @@ index 776f53a..724b67d 100644
    state_machine
    therubyracer
 -- 
-1.8.3.4 (Apple Git-47)
+1.7.10.4
+
