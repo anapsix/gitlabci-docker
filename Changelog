@@ -1,0 +1,17 @@
+## Changelog
+
+### gitlabci_v5.0
+* upgraded to GitLab-CI version 5.0.1
+* `MYSQL_MIGRATE` will not work for 4.1 to 5.0 upgrade, just recreate the DB with `MYSQL_SETUP=true`
+* switched from Puma to Unicorn, per GitLab-CI changes
+
+### gitlabci_v4.1
+* upgraded to GitLab-CI version 4.1
+* supporting **persistent/external** MySQL
+* using native `ADD` instead or `curl` when building Docker image
+
+### gitlabci_v3.2
+* GitLab-CI version 3.2
+* trivial patching GitLab-CI to support SQLite3, thanks ActiveRecord
+* generating DB and Application config files at start-time
+* first version of the start-up and config generation script
