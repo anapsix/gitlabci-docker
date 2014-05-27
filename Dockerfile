@@ -8,7 +8,7 @@ RUN gem install bundle --no-ri --no-rdoc
 
 RUN adduser --disabled-login --gecos 'GitLab CI' gitlab_ci
 
-RUN cd /home/gitlab_ci; sudo -u gitlab_ci -H git clone -b 4-1-stable --depth 1 https://github.com/gitlabhq/gitlab-ci.git gitlab-ci
+RUN cd /home/gitlab_ci; sudo -u gitlab_ci -H git clone -b 5-0-stable --depth 1 https://github.com/gitlabhq/gitlab-ci.git gitlab-ci
 RUN cd /home/gitlab_ci/gitlab-ci; sudo -u gitlab_ci -H mkdir -p tmp/pids tmp/sockets log
 
 # add and patch to support SQLITE3
@@ -21,7 +21,7 @@ RUN cd /home/gitlab_ci/gitlab-ci; sudo -u gitlab_ci -H bundle install --without 
 ADD ./gitlab_ctrl.rb /home/gitlab_ci/gitlab-ci/gitlabci_ctrl.rb
 RUN chmod +x /home/gitlab_ci/gitlab-ci/gitlabci_ctrl.rb
 
-RUN cd /home/gitlab_ci/gitlab-ci; sudo -u gitlab_ci -H ./gitlabci_ctrl.rb --puma --app GITLAB_URLS="https://dev.gitlab.org/"
+RUN cd /home/gitlab_ci/gitlab-ci; sudo -u gitlab_ci -H ./gitlabci_ctrl.rb --unicorn --app GITLAB_URLS="https://dev.gitlab.org/"
 RUN cd /home/gitlab_ci/gitlab-ci; sudo -u gitlab_ci -H bundle exec whenever -w RAILS_ENV=production
 
 # cleanup, if needed
