@@ -4,6 +4,12 @@ This repository is all you need to create your own [Docker](http://docker.io) im
 You can find a pre-build image [anapsix/gitlab-ci at Docker INDEX](https://index.docker.io/u/anapsix/gitlab-ci/)
 
 
+### Versions
+
+Keep in mind, that "latest" tag and "master" branch are subject to be updated, hence the names.  
+For older versions, use source repo specific branches (gitlabci_v3.2/gitlabci_v4.1) or proper image tags.
+
+
 ### Usage
 
 
