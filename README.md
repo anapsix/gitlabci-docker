@@ -36,7 +36,7 @@ Launch the instance like so:
 
  **WARNING**: every time you pass *MYSQL_SETUP=true*, it will overwrite an existing MySQL database..
 
- - You should set MYSQL_SETUP=true only first time you start container only if there is no existing DB for specified credentials / host / db name, otherwise, you **WILL LOSE** db content and all settings.
+ - You should set MYSQL_SETUP=true only first time you start container if there is no existing DB for specified credentials / host / db name, otherwise, you **WILL LOSE** DB content and all settings. Could be used to jump between incompatible versions, such as 4.x ->  5.x, while overwriting existing DB.
 
 
 ### ENV params
@@ -44,8 +44,8 @@ Launch the instance like so:
  - `GITLAB_URLS` (required: set it to full URL of your GitLAB SCM installation)
  - `GITLAB_CI_HOST` (optional: probably helpful when using HTTPS)
  - `GITLAB_CI_HTTPS` (optional: used to enable HTTPS support)
- - `MYSQL_SETUP` (optional: use with caution: initializes DB, wipes it if already present)
- - `MYSQL_MIGRATE` (optional: use it when upgrading between GitLAB-CI versions)
+ - `MYSQL_SETUP` (optional: use with caution: initializes DB, wipes it if already present, helpful when upgrading between incompatible versions)
+ - `MYSQL_MIGRATE` (optional: use it when upgrading between GitLAB-CI versions, doesn't work between 4.x and 5.x)
  - `MYSQL_HOST` (required for MySQL support, if not set temp SQLite3 will be used)
  - `MYSQL_USER` (optional, will default to gitlabci if not set)
  - `MYSQL_PWD` (optional, will default to gitlabci if not set)
@@ -69,7 +69,7 @@ Launch the instance like so:
 
 ### Contributors
 
-* Anastas Semenov <anapsix@random.io>
+* Anastas Dancha <anapsix@random.io>
 * TruongSinh Tran-Nguyen <i@truongsinh.pro>
 
 ### License
