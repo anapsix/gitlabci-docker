@@ -7,6 +7,7 @@ GITLAB_HOME = File.expand_path('../',__FILE__)
 $app_config_file  = GITLAB_HOME + '/config/application.yml'
 $db_config_file   = GITLAB_HOME + '/config/database.yml'
 $puma_config_file = GITLAB_HOME + '/config/puma.rb'
+$unicorn_config_file = GITLAB_HOME + '/config/unicorn.rb'
 
 # simple db config for sqlite3, replace with your own
 # stored as String for easy reading / updates
@@ -42,6 +43,35 @@ state_path "\#{application_path}/tmp/pids/puma.state"
 stdout_redirect "\#{application_path}/log/puma.stdout.log", "\#{application_path}/log/puma.stderr.log"
 bind 'tcp://0.0.0.0:9000'
 workers 2
+EOF
+
+$unicorn_config =<<EOF
+listen "/home/gitlab_ci/gitlab-ci/tmp/sockets/gitlab-ci.socket", :backlog => 64
+listen "0.0.0.0:9000", :tcp_nopush => true
+timeout 30
+pid "/home/gitlab_ci/gitlab-ci/tmp/pids/unicorn.pid"
+stderr_path "/home/gitlab_ci/gitlab-ci/log/unicorn.stderr.log"
+stdout_path "/home/gitlab_ci/gitlab-ci/log/unicorn.stdout.log"
+preload_app true
+GC.respond_to?(:copy_on_write_friendly=) and
+  GC.copy_on_write_friendly = true
+check_client_connection false
+before_fork do |server, worker|
+  defined?(ActiveRecord::Base) and
+    ActiveRecord::Base.connection.disconnect!
+  old_pid = "\#{server.config[:pid]}.oldbin"
+  if old_pid != server.pid
+    begin
+      sig = (worker.nr + 1) >= server.worker_processes ? :QUIT : :TTOU
+      Process.kill(sig, File.read(old_pid).to_i)
+    rescue Errno::ENOENT, Errno::ESRCH
+    end
+  end
+end
+after_fork do |server, worker|
+  defined?(ActiveRecord::Base) and
+    ActiveRecord::Base.establish_connection
+end
 EOF
 
 # write DB config
@@ -110,6 +140,15 @@ def write_puma_config
   end
 end
 
+# write PUMA config
+def write_unicorn_config
+  begin
+    File.open($unicorn_config_file, "w") { |f| f.write($unicorn_config) }
+  rescue
+    puts "[FATAL]: Could not write UNICORN config file (#{$unicorn_config_file}), exiting.."
+  end
+end
+
 # write application.yml config
 def write_app_config
   # read app config from example file
@@ -125,7 +164,7 @@ def write_app_config
     puts "[DEBUG]: GITLAB_URLS=#{ENV['GITLAB_URLS']}" if ENV['DEBUG']
     puts "[DEBUG]: GITLAB_CI_HOST=#{ENV['GITLAB_CI_HOST']||"localhost"}" if ENV['DEBUG']
     puts "[DEBUG]: GITLAB_CI_HTTPS=#{ENV['GITLAB_CI_HTTPS']||false}" if ENV['DEBUG']
-    app_config["production"]["allowed_gitlab_urls"] = ENV['GITLAB_URLS'].split(",")
+    app_config["production"]["gitlab_server_urls"] = ENV['GITLAB_URLS'].split(",")
     app_config["production"]["gitlab_ci"]["host"] = ENV['GITLAB_CI_HOST'] || "localhost"
     # enable HTTPS if GITLAB_CI_HTTPS environmental is set to "true"
     app_config["production"]["gitlab_ci"]["https"] = true if ENV['GITLAB_CI_HTTPS'] == "true"
@@ -154,7 +193,7 @@ end
 # help
 def help
 puts <<-EOF
-#{$0} [-h|--help] [--db] [--puma] [--app "http://dev.gitlab.org"] [--start]
+#{$0} [-h|--help] [--db] [--puma] [--unicorn] [--app "http://dev.gitlab.org"] [--start]
 
 -h, --help:
     show help
@@ -164,6 +203,9 @@ puts <<-EOF
 
 --puma:
   create puma config
+
+--unicorn:
+  create unicorn config
 
 --app [ "http://dev.gitlab.org,https://dev.gitlab.org" ]
   create application config, optionally passing a comma delimited list of allowed gitlab urls
@@ -183,6 +225,7 @@ opts = GetoptLong.new(
   [ '--help', '-h', GetoptLong::NO_ARGUMENT ],
   [ '--db', GetoptLong::NO_ARGUMENT ],
   [ '--puma', GetoptLong::NO_ARGUMENT ],
+  [ '--unicorn', GetoptLong::NO_ARGUMENT ],
   [ '--start', GetoptLong::NO_ARGUMENT ],
   [ '--app', GetoptLong::OPTIONAL_ARGUMENT ]
 )
@@ -197,6 +240,8 @@ opts.each do |opt, arg|
       write_db_config
     when '--puma'
       write_puma_config
+    when '--unicorn'
+      write_unicorn_config
     when '--start'
       write_db_config
       write_app_config
