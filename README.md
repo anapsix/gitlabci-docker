@@ -1,7 +1,8 @@
 ## gitlabci-docker
 
 This repository is all you need to create your own [Docker](http://docker.io) image of [Gitlab-CI](http://gitlab.org/gitlab-ci/) continuios integration server.
-You can find a pre-build image [anapsix/gitlab-ci at Docker INDEX](https://index.docker.io/u/anapsix/gitlab-ci/)
+You can find a pre-build image [anapsix/gitlab-ci at Docker INDEX](https://registry.hub.docker.com/u/anapsix/gitlab-ci)
+Works with Docker 1.0.
 
 
 ### Versions
@@ -16,7 +17,7 @@ For older versions, use source repo specific branches (gitlabci_v3.2/gitlabci_v4
 If you want to run my pre-build image, just run the following (possibly as sudo):
 
     docker pull anapsix/gitlab-ci
-    docker run -d -p 9000 -e GITLAB_URLS="https://dev.gitlab.org,https://staging.gitlab.org" anapsix/gitlab-ci
+    docker run -d -p 9000 -e GITLAB_URLS="https://dev.gitlab.org,https://staging.gitlab.org" anapsix/gitlab-ci:5.0
 
 You can rebuild the image from scratch with:
 
@@ -46,7 +47,7 @@ Launch the instance like so:
 
 
 ### ENV params
- - `DEBUG` (optional: enables debug messages during container startup)
+ - `DEBUG` (optional: "true" enables debug messages during container startup)
  - `GITLAB_URLS` (required: set it to full URL of your GitLAB SCM installation)
  - `GITLAB_CI_HOST` (optional: probably helpful when using HTTPS)
  - `GITLAB_CI_HTTPS` (optional: used to enable HTTPS support)
