@@ -1,6 +1,6 @@
 FROM debian:wheezy
 
-MAINTAINER Anastas Semenov <anapsix@random.io>
+MAINTAINER Anastas Dancha <anapsix@random.io>
 
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes libxml2-dev libxslt-dev libcurl4-openssl-dev libreadline6-dev libc6-dev libssl-dev libyaml-dev libicu-dev zlib1g-dev libsqlite3-dev libmysqlclient-dev wget curl gcc build-essential make git sudo postfix cron ruby1.9.1 ruby1.9.1-dev rubygems-integration redis-server
