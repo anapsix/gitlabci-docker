@@ -69,7 +69,7 @@ Launch the instance like so:
 
 ### Contributors
 
-* Anastas Semenov <anapsix@random.io>
+* Anastas Dancha <anapsix@random.io>
 * TruongSinh Tran-Nguyen <i@truongsinh.pro>
 
 ### License
