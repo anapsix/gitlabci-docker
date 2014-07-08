@@ -7,6 +7,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes libxml2-dev li
 RUN gem install bundle --no-ri --no-rdoc
 
 RUN adduser --disabled-login --gecos 'GitLab CI' gitlab_ci
+RUN usermod -a -G crontab gitlab_ci
 
 RUN cd /home/gitlab_ci; sudo -u gitlab_ci -H git clone -b 3-2-stable --depth 1 https://github.com/gitlabhq/gitlab-ci.git gitlab-ci
 RUN cd /home/gitlab_ci/gitlab-ci; sudo -u gitlab_ci -H mkdir -p tmp/pids tmp/sockets log
