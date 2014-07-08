@@ -60,7 +60,7 @@ Examples
 Contributors
 ------------
 
-* Anastas Semenov <anapsix@random.io>
+* Anastas Dancha <anapsix@random.io>
 
 License
 -------
