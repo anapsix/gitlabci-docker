@@ -25,9 +25,16 @@ RUN chmod +x /home/gitlab_ci/gitlab-ci/gitlabci_ctrl.rb
 RUN cd /home/gitlab_ci/gitlab-ci; sudo -u gitlab_ci -H ./gitlabci_ctrl.rb --unicorn --app GITLAB_URLS="https://dev.gitlab.org/"
 RUN cd /home/gitlab_ci/gitlab-ci; sudo -u gitlab_ci -H bundle exec whenever -w RAILS_ENV=production
 
+# set owner explicitly
+RUN chown gitlab_ci -R /home/gitlab_ci
+
 # cleanup, if needed
+RUN DEBIAN_FRONTEND=noninteractive apt-get clean all
 #RUN DEBIAN_FRONTEND=noninteractive apt-get remove --force-yes -y ruby1.9.1-dev
 #RUN DEBIAN_FRONTEND=noninteractive apt-get autoremove --force-yes -y
+
+VOLUME ["/home/gitlab_ci/gitlab-ci/db"]
+VOLUME ["/home/gitlab_ci/gitlab-ci/log"]
 
 EXPOSE 9000
 
